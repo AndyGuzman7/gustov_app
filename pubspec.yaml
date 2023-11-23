@@ -28,6 +28,11 @@ dependencies:
   mailer: ^6.0.1
   intl: ^0.17.0
   dio: ^5.3.4
+  equatable: ^2.0.5
+  firebase_core: ^2.23.0
+  cloud_firestore: ^4.13.2
+  firebase_auth: ^4.14.1
+  firebase_app_check: ^0.2.1+5
 
 dev_dependencies:
   flutter_test:
