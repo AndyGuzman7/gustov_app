@@ -17,7 +17,7 @@ class EmployeePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<EmployeeBloc>(
       create: (context) => sl<EmployeeBloc>()..add(const InitEvent()),
-      child: EmployeeView(),
+      child: const EmployeeView(),
     );
   }
 }
@@ -27,10 +27,6 @@ class EmployeeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<StudentsBloc>(context)
-          .add(StudentsEvent.started(context));
-    });*/
     final bloc = context.read<EmployeeBloc>();
     return BodyBase(
       "Empleados Gustov",
@@ -48,14 +44,6 @@ class EmployeeView extends StatelessWidget {
                 textButton: 'Empleado',
                 onPressed: () async {
                   Navigator.pushNamed(context, Routes.employeesRegister);
-                  /*await showModalBottomSheet(
-                    isScrollControlled: true,
-                    isDismissible: false,
-                    context: context,
-                    builder: (_) {
-                      return EmployeeRegisterPage();
-                    },
-                  );*/
                 },
               ),
             )
@@ -93,11 +81,6 @@ class EmployeeView extends StatelessWidget {
                         style: TextStyle(fontSize: 16),
                       ),
                       trailing: Icon(Icons.phone),
-                      onTap: () {
-                        /*Navigator.pushNamed(context, Routes.STUDENT_DATA_PAGE,
-                            arguments: listTeachers[index]);*/
-                        // Acción al hacer clic en un elemento
-                      },
                     ),
                   );
                 },

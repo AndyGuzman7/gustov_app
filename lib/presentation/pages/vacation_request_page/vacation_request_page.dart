@@ -32,40 +32,10 @@ class VacationRequestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      BlocProvider.of<StudentsBloc>(context)
-          .add(StudentsEvent.started(context));
-    });*/
     final bloc = context.read<VacationRequestBloc>();
     return BodyBase(
       "Solicitudes vacaciones",
       [
-        /*Row(
-          children: [
-            Expanded(
-              child: SizedBox(),
-            ),
-            SizedBox(width: 8), // Espacio entre los widgets
-            Expanded(
-              child: CustomButton(
-                height: 48,
-                icon: Icon(Icons.add),
-                textButton: 'Empleado',
-                onPressed: () async {
-                  Navigator.pushNamed(context, Routes.employeesRegiste);
-                  /*await showModalBottomSheet(
-                    isScrollControlled: true,
-                    isDismissible: false,
-                    context: context,
-                    builder: (_) {
-                      return EmployeeRegisterPage();
-                    },
-                  );*/
-                },
-              ),
-            )
-          ],
-        ),*/
         SizedBox(height: 16.0),
         BlocSelector<VacationRequestBloc, VacationRequestState,
             List<VacationRequestEntity>?>(
@@ -112,11 +82,6 @@ class VacationRequestView extends StatelessWidget {
                             style: TextStyle(fontSize: 16),
                           ),
                           trailing: Icon(Icons.free_breakfast),
-                          onTap: () {
-                            /*Navigator.pushNamed(context, Routes.STUDENT_DATA_PAGE,
-                                  arguments: listTeachers[index]);*/
-                            // Acción al hacer clic en un elemento
-                          },
                         ),
                         Text(
                           "Fecha Solicitud: " +
