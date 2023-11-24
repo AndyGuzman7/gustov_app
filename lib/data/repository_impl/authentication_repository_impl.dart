@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/data/data_sources/remote/dao.database_firestore/firebase_service.dart';
@@ -36,9 +37,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       final user = userCredential.user;
+      if (user == null) return const DataEmpty();
+
+      print("siuuddd");
       return DataSuccess(user);
     } catch (e) {
-      print(e);
+      print("sdfsadfasfasf");
+      log(e.toString());
       return const DataEmpty();
     }
   }

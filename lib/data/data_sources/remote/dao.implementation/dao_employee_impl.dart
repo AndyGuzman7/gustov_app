@@ -4,10 +4,12 @@ import 'package:flutter_application_gustov/data/models/employee_model.dart';
 
 class DAOEmployeeImpl extends BaseFirestoreRepositoryImpl<EmployeeModel>
     implements DAOEmployee {
-  DAOEmployeeImpl() : super("Employee");
+  DAOEmployeeImpl() : super("users");
 
   @override
   EmployeeModel fromJson(Map<String, dynamic> map) {
+    print("comida");
+    print(map);
     return EmployeeModel.fromJson(map);
   }
 

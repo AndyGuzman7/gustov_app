@@ -28,8 +28,8 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: colorIcon),
       actions: actions,
       elevation: elevation,
-      leading: Builder(
-        builder: (BuildContext context) {
+      /*leading: Builder(
+        /*builder: (BuildContext context) {
           return IconButton(
             icon: Container(
               height: 100,
@@ -48,9 +48,9 @@ class AppBarCustom extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Scaffold.of(context).openDrawer(); // Abre el menú lateral
             },
-          );
+          );*/
         },
-      ),
+      ),*/
       backgroundColor: background,
     );
   }
