@@ -70,40 +70,62 @@ class VacationRequestView extends StatelessWidget {
         BlocSelector<VacationRequestBloc, VacationRequestState,
             List<VacationRequestEntity>?>(
           selector: (state) => state.vacationRequest,
-          builder: (_, listTeachers) {
-            if (listTeachers == null)
+          builder: (_, list) {
+            if (list == null)
               return const SizedBox(
                 child: Text(""),
               );
 
-            if (listTeachers.isEmpty) {
+            if (list.isEmpty) {
               return const SizedBox(
                 child: Text("No hay registros"),
               );
             }
             return Expanded(
               child: ListView.builder(
-                itemCount:
-                    listTeachers.length, // Número de elementos en la lista
+                itemCount: list.length, // Número de elementos en la lista
                 itemBuilder: (context, index) {
+                  final vacationRequestEntity = list[index];
                   return Card(
                     elevation: 4,
-                    child: ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text(
-                        listTeachers[index].description!,
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      subtitle: Text(
-                        listTeachers[index].autorizationVacation.toString(),
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      trailing: Icon(Icons.phone),
-                      onTap: () {
-                        /*Navigator.pushNamed(context, Routes.STUDENT_DATA_PAGE,
-                            arguments: listTeachers[index]);*/
-                        // Acción al hacer clic en un elemento
-                      },
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("Solicitud de vacación"),
+                        ListTile(
+                          leading: Icon(Icons.description),
+                          title: Column(
+                            children: [
+                              Text("Descripción:"),
+                              Text(
+                                vacationRequestEntity.description!,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ],
+                          ),
+                          subtitle: Text(
+                            stateAutorization(
+                              vacationRequestEntity.autorizationVacation!,
+                            ),
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          trailing: Icon(Icons.free_breakfast),
+                          onTap: () {
+                            /*Navigator.pushNamed(context, Routes.STUDENT_DATA_PAGE,
+                                  arguments: listTeachers[index]);*/
+                            // Acción al hacer clic en un elemento
+                          },
+                        ),
+                        Text(
+                          "Fecha Solicitud: " +
+                              vacationRequestEntity.dateRequest.toString(),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        )
+                      ],
                     ),
                   );
                 },
@@ -113,5 +135,18 @@ class VacationRequestView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String stateAutorization(int state) {
+    switch (state) {
+      case 1:
+        return "Estado: Aprobado";
+      case 0:
+        return "Estado: Pendiente";
+      case -1:
+        return "Estado: Desaprobado";
+      default:
+        return "Sin estado";
+    }
   }
 }

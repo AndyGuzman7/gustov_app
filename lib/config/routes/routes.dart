@@ -6,4 +6,5 @@ class Routes {
   static const String employeesRegister = '/employeesRegister';
 
   static const String requestVacation = '/requestVacation';
+  static const String requestVacationCreate = '/requestVacationCreate';
 }

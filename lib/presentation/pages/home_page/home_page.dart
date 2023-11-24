@@ -60,26 +60,25 @@ class HomePage extends StatelessWidget {
                     SizedBox(
                       height: 8,
                     ),
-                    if (typeUser == "UserTypes.ADMIN" ||
-                        typeUser == "UserTypes.DIRECTIVE")
+                    if (typeUser == "Employee")
                       Row(
                         children: [
                           Expanded(
                             child: ItemButton(
-                              textTitle: "Registros",
-                              pageRoute: Routes.login,
-                              textSubTitle: 'Registros de tarjetas',
+                              textTitle: "Vacaciones",
+                              pageRoute: Routes.requestVacationCreate,
+                              textSubTitle: 'Solicitud de vacaciones',
                               iconButtonItem: Icon(Icons.dock),
                             ),
                           ),
                           SizedBox(width: 8), // Espacio entre los widgets
                           Expanded(
                             child: const ItemButton(
-                              textTitle: "Clases",
-                              pageRoute: Routes.login,
-                              textSubTitle: 'Clases UAB',
+                              textTitle: "Recursos Humanos",
+                              pageRoute: Routes.requestVacationCreate,
+                              textSubTitle: 'Gustov INC.',
                               iconButtonItem: Icon(
-                                Icons.class_,
+                                Icons.compare,
                                 color: Colors.blue,
                               ),
                             ),

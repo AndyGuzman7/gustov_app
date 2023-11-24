@@ -12,9 +12,12 @@ import 'package:flutter_application_gustov/domain/repository/session_repository.
 import 'package:flutter_application_gustov/domain/usecases/get_employees.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request.dart';
+import 'package:flutter_application_gustov/domain/usecases/get_vacation_request_by_employee.dart';
 import 'package:flutter_application_gustov/domain/usecases/insert_employee.dart';
+import 'package:flutter_application_gustov/domain/usecases/insert_vacation_request.dart';
 import 'package:flutter_application_gustov/domain/usecases/save_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/sign_employee.dart';
+import 'package:flutter_application_gustov/domain/usecases/signout_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/signup_employee.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee_register/employee_register_bloc.dart';
@@ -23,6 +26,7 @@ import 'package:flutter_application_gustov/presentation/bloc/login/login_bloc.da
 import 'package:flutter_application_gustov/presentation/bloc/session/session_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/splash/splash_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_bloc.dart';
+import 'package:flutter_application_gustov/presentation/bloc/vacation_request_create/vacation_request_create_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/data_sources/remote/dao.interfaces/dao_vacation_request.dart';
@@ -51,7 +55,7 @@ Future<void> injectDependencies() async {
   );
 
   sl.registerSingleton<VacationRequestRepository>(
-    VacationRequestRepositoryImpl(sl()),
+    VacationRequestRepositoryImpl(sl(), sl()),
   );
 
   // UseCases
@@ -83,6 +87,18 @@ Future<void> injectDependencies() async {
       sl(),
     ),
   );
+  sl.registerSingleton<SignoutSessionUseCase>(
+      SignoutSessionUseCase(sl(), sl()));
+  sl.registerSingleton<GetVacationRequestByEmployeeUseCase>(
+    GetVacationRequestByEmployeeUseCase(
+      sl(),
+    ),
+  );
+  sl.registerSingleton<InsertVacationRequestUseCase>(
+    InsertVacationRequestUseCase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerSingleton<SessionBloc>(SessionBloc());
@@ -106,6 +122,13 @@ Future<void> injectDependencies() async {
   sl.registerFactory<EmployeeRegisterBloc>(
     () => EmployeeRegisterBloc(
       sl(),
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
+  sl.registerFactory<VacationRequestCreateBloc>(
+    () => VacationRequestCreateBloc(
       sl(),
       sl(),
       sl(),
