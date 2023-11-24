@@ -6,7 +6,7 @@ import '../dao.database_firestore/base_remote_data_soruce.dart';
 class DAOVacationRequestImpl
     extends BaseFirestoreRepositoryImpl<VacationRequestModel>
     implements DAOVacationRequest {
-  DAOVacationRequestImpl(super.collectionPath);
+  DAOVacationRequestImpl() : super("VacationRequest");
 
   @override
   VacationRequestModel fromJson(Map<String, dynamic> map) {
