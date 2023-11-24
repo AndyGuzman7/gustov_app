@@ -48,7 +48,7 @@ class EmployeeModel extends EmployeeEntity {
       uid: json['uid'] ?? "",
       password: "",
       workStartDate:
-          (json['birthDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
+          (json['workStartDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
 
     return user;

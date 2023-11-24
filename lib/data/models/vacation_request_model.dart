@@ -1,17 +1,19 @@
-import 'package:flutter_application_gustov/data/models/employee_model.dart';
-import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class VacationRequestModel extends VacationRequestEntity {
-  const VacationRequestModel({
-    String? id,
-    String? description,
-    String? idEmployee,
-    bool? autorization,
-  }) : super(
-          id: id,
-          description: description,
-          autorizationVacation: autorization,
-        );
+class VacationRequestModel {
+  final String? id;
+  final String? description;
+  final String? idEmployee;
+  final int? autorization;
+  final DateTime? dateRequest;
+
+  VacationRequestModel({
+    this.description,
+    this.idEmployee,
+    this.autorization,
+    this.dateRequest,
+    this.id,
+  });
 
   factory VacationRequestModel.fromJson(Map<String, dynamic> map) {
     return VacationRequestModel(
@@ -19,6 +21,8 @@ class VacationRequestModel extends VacationRequestEntity {
       description: map['description'] ?? '',
       autorization: map['autorization'],
       idEmployee: map['idEmployee'] ?? '',
+      dateRequest:
+          (map['dateRequest'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
@@ -26,8 +30,9 @@ class VacationRequestModel extends VacationRequestEntity {
     return {
       'id': id,
       'description': description,
-      'autorization': autorizationVacation,
-      'idEmployee': employeeEntity!.id,
+      'autorization': autorization,
+      'idEmployee': idEmployee,
+      'dateRequest': dateRequest
     };
   }
 }

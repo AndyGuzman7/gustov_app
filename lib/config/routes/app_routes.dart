@@ -6,6 +6,7 @@ import 'package:flutter_application_gustov/presentation/pages/employee_register_
 import 'package:flutter_application_gustov/presentation/pages/home_page/home_page.dart';
 import 'package:flutter_application_gustov/presentation/pages/login_page/login_page.dart';
 import 'package:flutter_application_gustov/presentation/pages/splash_page/splash_page.dart';
+import 'package:flutter_application_gustov/presentation/pages/vacation_request_create_page/vacation_request_create_page.dart';
 import 'package:flutter_application_gustov/presentation/pages/vacation_request_page/vacation_request_page.dart';
 
 import 'dafault.dart';
@@ -26,6 +27,9 @@ class AppRoutes {
         return _materialRoute(EmployeeRegisterPage());
       case Routes.requestVacation:
         return _materialRoute(VacationRequestPage());
+
+      case Routes.requestVacationCreate:
+        return _materialRoute(VacationRequestCreatePage());
       default:
         return _materialRoute(const Default());
     }
