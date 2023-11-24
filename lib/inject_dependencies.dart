@@ -12,9 +12,13 @@ import 'package:flutter_application_gustov/domain/repository/session_repository.
 import 'package:flutter_application_gustov/domain/usecases/get_employees.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request.dart';
+import 'package:flutter_application_gustov/domain/usecases/insert_employee.dart';
 import 'package:flutter_application_gustov/domain/usecases/save_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/sign_employee.dart';
+import 'package:flutter_application_gustov/domain/usecases/signup_employee.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_bloc.dart';
+import 'package:flutter_application_gustov/presentation/bloc/employee_register/employee_register_bloc.dart';
+import 'package:flutter_application_gustov/presentation/bloc/employee_register/employee_register_event.dart';
 import 'package:flutter_application_gustov/presentation/bloc/login/login_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/session/session_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/splash/splash_bloc.dart';
@@ -63,9 +67,22 @@ Future<void> injectDependencies() async {
   );
 
   sl.registerSingleton<SignEmployeeUseCase>(
-    SignEmployeeUseCase(sl(), sl(), sl()),
+    SignEmployeeUseCase(
+      sl(),
+      sl(),
+      sl(),
+    ),
   );
+
   sl.registerSingleton<GetEmployeesUseCase>(GetEmployeesUseCase(sl()));
+
+  sl.registerSingleton<InsertEmployeeUseCase>(InsertEmployeeUseCase(sl()));
+
+  sl.registerSingleton<SignUpEmployeeUseCase>(
+    SignUpEmployeeUseCase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerSingleton<SessionBloc>(SessionBloc());
@@ -76,6 +93,7 @@ Future<void> injectDependencies() async {
       sl(),
     ),
   );
+
   sl.registerFactory<LoginBloc>(
     () => LoginBloc(sl(), sl(), sl()),
   );
@@ -84,4 +102,13 @@ Future<void> injectDependencies() async {
     () => VacationRequestBloc(sl()),
   );
   sl.registerFactory<EmployeeBloc>(() => EmployeeBloc(sl()));
+
+  sl.registerFactory<EmployeeRegisterBloc>(
+    () => EmployeeRegisterBloc(
+      sl(),
+      sl(),
+      sl(),
+      sl(),
+    ),
+  );
 }

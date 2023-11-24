@@ -10,6 +10,8 @@ class EmployeeModel extends EmployeeEntity {
     required String email,
     required String position,
     required String uid,
+    required String password,
+    required DateTime workStartDate,
   }) : super(
           id: id,
           name: name,
@@ -18,6 +20,8 @@ class EmployeeModel extends EmployeeEntity {
           email: email,
           position: position,
           uid: uid,
+          password: password,
+          workStartDate: workStartDate,
         );
 
   Map<String, dynamic> toJson() {
@@ -29,12 +33,11 @@ class EmployeeModel extends EmployeeEntity {
       'email': email,
       'position': position,
       'uid': uid,
+      'workStartDate': workStartDate,
     };
   }
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
-    print("wey");
-    print(json['id']);
     final user = EmployeeModel(
       id: json['id'] ?? "",
       name: json['name'] ?? "",
@@ -43,9 +46,11 @@ class EmployeeModel extends EmployeeEntity {
       email: json['email'] ?? "",
       position: json['position'] ?? "",
       uid: json['uid'] ?? "",
+      password: "",
+      workStartDate:
+          (json['birthDate'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
-    print("di");
-    print(user);
+
     return user;
   }
 
