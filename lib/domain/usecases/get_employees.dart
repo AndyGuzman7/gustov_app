@@ -1,15 +1,16 @@
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/core/usecases/usecase.dart';
-import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
-import 'package:flutter_application_gustov/domain/repository/vacation_request_repository.dart';
+import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
+import 'package:flutter_application_gustov/domain/repository/employee_repository.dart';
+import 'package:flutter_application_gustov/domain/repository/session_repository.dart';
 
-class GetVacationRequestUseCase
-    implements UseCase<DataState<List<VacationRequestEntity>>, void> {
-  final VacationRequestRepository _vacationRequestRepository;
+class GetEmployeesUseCase
+    implements UseCase<DataState<List<EmployeeEntity>>, void> {
+  final EmployeeRepository _employeeRepository;
 
-  GetVacationRequestUseCase(this._vacationRequestRepository);
+  GetEmployeesUseCase(this._employeeRepository);
   @override
-  Future<DataState<List<VacationRequestEntity>>> call({void params}) {
-    return _vacationRequestRepository.getVacationRequest();
+  Future<DataState<List<EmployeeEntity>>> call({void params}) {
+    return _employeeRepository.getEmployees();
   }
 }

@@ -11,11 +11,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  FlutterError.onError = (details) {
+  /* FlutterError.onError = (details) {
     FlutterError.presentError(details);
     print(details);
     if (kReleaseMode) exit(1);
-  };
+  };*/
   injectDependencies();
   runApp(const MyApp());
 }

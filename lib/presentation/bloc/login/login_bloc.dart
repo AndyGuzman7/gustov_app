@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_gustov/config/routes/routes.dart';
 import 'package:flutter_application_gustov/config/util/input_validators.dart';
+import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/data/models/error_dialog_data.dart';
 import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
 import 'package:flutter_application_gustov/domain/usecases/save_session.dart';
@@ -136,12 +137,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     String email,
   ) async {
     print("hola");
-    await _signEmployeeUseCase(params: SignEmployeeParams(email, password));
+    final response =
+        await _signEmployeeUseCase(params: SignEmployeeParams(email, password));
+
+    print(response.data!.id);
+    if (response is DataSuccess) {
+      return response.data;
+    } else if (response is DataFailed) {
+      print(response.error!.error);
+    }
+    return null;
   }
 
-  String? Function(String?) get validationUserName => (String? value) {
+  String? Function(String?) get validationEmail => (String? value) {
         if (!InputValidators.isRequired(value)) {
           return "No se permite vacios";
+        }
+        if (!InputValidators.isEmail(value)) {
+          return "Email Invalido";
         }
 
         return null;

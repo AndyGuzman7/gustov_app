@@ -96,7 +96,7 @@ class BaseFirestoreRepositoryImpl<T> implements BaseFirestoreRepository<T> {
       if (querySnapshot.size > 0) {
         final DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
         final response = fromJson(fromSnapshot(documentSnapshot)!);
-
+        print(response.toString() + "sdas");
         return response;
       } else {
         return null;
@@ -162,6 +162,7 @@ class BaseFirestoreRepositoryImpl<T> implements BaseFirestoreRepository<T> {
   @override
   Map<String, dynamic>? fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>?;
+    print(data);
     return data;
   }
 

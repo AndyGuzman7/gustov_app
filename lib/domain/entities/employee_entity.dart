@@ -7,6 +7,7 @@ class EmployeeEntity extends Equatable {
   final String? secondLastName;
   final String? email;
   final String? position;
+  final String? uid;
 
   const EmployeeEntity({
     this.id,
@@ -15,17 +16,11 @@ class EmployeeEntity extends Equatable {
     this.secondLastName,
     this.email,
     this.position,
+    this.uid,
   });
 
   @override
   List<Object?> get props {
-    return [
-      id,
-      name,
-      lastName,
-      secondLastName,
-      email,
-      position,
-    ];
+    return [id, name, lastName, secondLastName, email, position, uid];
   }
 }

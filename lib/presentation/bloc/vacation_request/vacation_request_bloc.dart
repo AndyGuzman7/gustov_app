@@ -3,7 +3,7 @@ import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_event.dart';
 import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_state.dart';
 
-import '../../../domain/usecases/get_vaction_request.dart';
+import '../../../domain/usecases/get_vacation_request.dart';
 
 class VacationRequestBloc
     extends Bloc<VacationRequestEvent, VacationRequestState> {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/core/usecases/usecase.dart';
 import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
@@ -21,11 +22,16 @@ class SignEmployeeUseCase
   Future<DataState<EmployeeEntity>> call({SignEmployeeParams? params}) async {
     final user =
         await _auth.signInWithEmailAndPassword(params!.email, params.password);
-    if (user is DataEmpty) return const DataEmpty();
+    print(user.data);
+    if (user is DataEmpty<User>) return const DataEmpty();
+    print("1es");
 
     final member = await _user.getByType("uid", user.data!.uid);
-    if (member is DataEmpty) return const DataEmpty();
+    print(member);
+    if (member is DataEmpty<EmployeeEntity>) return const DataEmpty();
     await _session.saveToSession(member.data!);
+
+    print("se envia");
     return member;
   }
 }
