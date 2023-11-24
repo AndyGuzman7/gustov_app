@@ -108,11 +108,6 @@ class VacationRequestCreateView extends StatelessWidget {
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 trailing: Icon(Icons.free_breakfast),
-                                onTap: () {
-                                  /*Navigator.pushNamed(context, Routes.STUDENT_DATA_PAGE,
-                                  arguments: listTeachers[index]);*/
-                                  // Acción al hacer clic en un elemento
-                                },
                               ),
                               Text(
                                 "Fecha Solicitud: " +

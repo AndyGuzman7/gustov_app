@@ -14,7 +14,7 @@ class EmailService {
     final smtpServer = gmail(emailService, passwordService);
 
     final message = Message()
-      ..from = Address(emailService, 'Sistema EESS UAB')
+      ..from = Address(emailService, 'Sistema Gustov APP')
       ..recipients.add(emailClient)
       //..ccRecipients.addAll(['andyguzman117@example.com'])
       //..bccRecipients.add(Address('andyguzman117@example.com'))
