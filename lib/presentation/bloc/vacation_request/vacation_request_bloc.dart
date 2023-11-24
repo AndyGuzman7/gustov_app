@@ -19,7 +19,7 @@ class VacationRequestBloc
     VacationRequestEvent event,
     Emitter<VacationRequestState> emit,
   ) async {
-    final dataState = await _getVacationRequest();
+    final dataState = await _getVacationRequest.call();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       emit(VacationRequestDone(dataState.data!));
