@@ -8,7 +8,8 @@ class EmployeeEntity extends Equatable {
   final String? email;
   final String? position;
   final String? uid;
-
+  final String? password;
+  final DateTime? workStartDate;
   const EmployeeEntity({
     this.id,
     this.name,
@@ -17,10 +18,21 @@ class EmployeeEntity extends Equatable {
     this.email,
     this.position,
     this.uid,
+    this.password,
+    this.workStartDate,
   });
 
   @override
   List<Object?> get props {
-    return [id, name, lastName, secondLastName, email, position, uid];
+    return [
+      id,
+      name,
+      lastName,
+      secondLastName,
+      email,
+      position,
+      uid,
+      workStartDate
+    ];
   }
 }

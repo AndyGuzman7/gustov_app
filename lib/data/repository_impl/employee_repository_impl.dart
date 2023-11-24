@@ -43,4 +43,13 @@ class EmployeeRepositoryImpl implements EmployeeRepository {
       return DataFailed(e);
     }*/
   }
+
+  @override
+  Future<DataState<EmployeeEntity>> insert(EmployeeModel employeeModel) async {
+    final response = await _daoEmployee.insertWithGeneratedId(employeeModel);
+    print("model");
+    print(response);
+    if (response == null) return const DataEmpty();
+    return DataSuccess(employeeModel);
+  }
 }

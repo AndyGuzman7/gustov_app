@@ -1,31 +1,34 @@
-class RegisterState {
-  final String? password;
-  final String? userName;
-  final String? name;
-  final String? lastName;
-  final String? lastNameSecond;
+import 'package:flutter/cupertino.dart';
 
-  const RegisterState({
-    this.password,
-    this.userName,
-    this.name,
-    this.lastName,
-    this.lastNameSecond,
-  });
+abstract class EmployeeRegisterEvent {
+  const EmployeeRegisterEvent();
+}
 
-  RegisterState copyWith({
-    String? password,
-    String? name,
-    String? lastName,
-    String? lastNameSecond,
-    String? userName,
-  }) {
-    return RegisterState(
-      password: password ?? this.password,
-      name: name ?? this.name,
-      lastName: lastName ?? this.lastName,
-      lastNameSecond: lastNameSecond ?? this.lastNameSecond,
-      userName: userName ?? this.userName,
-    );
-  }
+class StartedRegisterEvent implements EmployeeRegisterEvent {
+  const StartedRegisterEvent();
+}
+
+class NameChangedRegisterEvent implements EmployeeRegisterEvent {
+  final String name;
+  const NameChangedRegisterEvent(this.name);
+}
+
+class LastNameChangedRegisterEvent implements EmployeeRegisterEvent {
+  final String lastName;
+  const LastNameChangedRegisterEvent(this.lastName);
+}
+
+class LastNameSecondChangedRegisterEvent implements EmployeeRegisterEvent {
+  final String lastNameSecond;
+  const LastNameSecondChangedRegisterEvent(this.lastNameSecond);
+}
+
+class EmailChangedRegisterEvent implements EmployeeRegisterEvent {
+  final String email;
+  const EmailChangedRegisterEvent(this.email);
+}
+
+class RegisterSubmittedRegisterEvent implements EmployeeRegisterEvent {
+  final BuildContext context;
+  const RegisterSubmittedRegisterEvent(this.context);
 }

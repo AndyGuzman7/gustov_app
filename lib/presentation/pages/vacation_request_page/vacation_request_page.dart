@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_gustov/config/routes/routes.dart';
 import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
+import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 import 'package:flutter_application_gustov/inject_dependencies.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_event.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_state.dart';
+import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_bloc.dart';
+import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_event.dart';
+import 'package:flutter_application_gustov/presentation/bloc/vacation_request/vacation_request_state.dart';
 import 'package:flutter_application_gustov/presentation/pages/employee_register_page/employee_register_.dart';
 import 'package:flutter_application_gustov/presentation/widgets/body/body_base.dart';
 import 'package:flutter_application_gustov/presentation/widgets/inputs/custom_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class EmployeePage extends StatelessWidget {
-  const EmployeePage({super.key});
+class VacationRequestPage extends StatelessWidget {
+  const VacationRequestPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<EmployeeBloc>(
-      create: (context) => sl<EmployeeBloc>()..add(const InitEvent()),
-      child: EmployeeView(),
+    return BlocProvider<VacationRequestBloc>(
+      create: (context) =>
+          sl<VacationRequestBloc>()..add(const GetVacationRequest()),
+      child: VacationRequestView(),
     );
   }
 }
 
-class EmployeeView extends StatelessWidget {
-  const EmployeeView({super.key});
+class VacationRequestView extends StatelessWidget {
+  const VacationRequestView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +36,11 @@ class EmployeeView extends StatelessWidget {
       BlocProvider.of<StudentsBloc>(context)
           .add(StudentsEvent.started(context));
     });*/
-    final bloc = context.read<EmployeeBloc>();
+    final bloc = context.read<VacationRequestBloc>();
     return BodyBase(
-      "Empleados Gustov",
+      "Solicitudes vacaciones",
       [
-        Row(
+        /*Row(
           children: [
             Expanded(
               child: SizedBox(),
@@ -47,7 +52,7 @@ class EmployeeView extends StatelessWidget {
                 icon: Icon(Icons.add),
                 textButton: 'Empleado',
                 onPressed: () async {
-                  Navigator.pushNamed(context, Routes.employeesRegister);
+                  Navigator.pushNamed(context, Routes.employeesRegiste);
                   /*await showModalBottomSheet(
                     isScrollControlled: true,
                     isDismissible: false,
@@ -60,10 +65,11 @@ class EmployeeView extends StatelessWidget {
               ),
             )
           ],
-        ),
+        ),*/
         SizedBox(height: 16.0),
-        BlocSelector<EmployeeBloc, EmployeeState, List<EmployeeEntity>?>(
-          selector: (state) => state.employees,
+        BlocSelector<VacationRequestBloc, VacationRequestState,
+            List<VacationRequestEntity>?>(
+          selector: (state) => state.vacationRequest,
           builder: (_, listTeachers) {
             if (listTeachers == null)
               return const SizedBox(
@@ -85,11 +91,11 @@ class EmployeeView extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.person),
                       title: Text(
-                        listTeachers[index].name!,
+                        listTeachers[index].description!,
                         style: TextStyle(fontSize: 18),
                       ),
                       subtitle: Text(
-                        listTeachers[index].email!,
+                        listTeachers[index].autorizationVacation.toString(),
                         style: TextStyle(fontSize: 16),
                       ),
                       trailing: Icon(Icons.phone),
