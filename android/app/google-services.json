@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "616363595034",
+    "project_id": "gustovapp-b329c",
+    "storage_bucket": "gustovapp-b329c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616363595034:android:71e00a4008cc69f05788a3",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_gustov"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG9K4mushQrVmY1FssFmqOwbCNx8VfVcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
