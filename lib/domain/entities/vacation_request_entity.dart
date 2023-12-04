@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_application_gustov/data/models/vacation_request_model.dart';
 import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
 
-class VacationRequestEntity extends Equatable {
+class VactionRequestEntity extends Equatable {
   final String? id;
   final String? description;
   final EmployeeEntity? employeeEntity;
@@ -10,7 +10,7 @@ class VacationRequestEntity extends Equatable {
   final DateTime? dateRequest;
   final String? idEmployee;
 
-  const VacationRequestEntity({
+  const VactionRequestEntity({
     this.id,
     this.idEmployee,
     this.description,
@@ -19,11 +19,11 @@ class VacationRequestEntity extends Equatable {
     this.dateRequest,
   });
 
-  factory VacationRequestEntity.fromModel(
+  factory VactionRequestEntity.fromModel(
     VacationRequestModel model,
     EmployeeEntity employeeEntity,
   ) {
-    return VacationRequestEntity(
+    return VactionRequestEntity(
       id: model.id,
       idEmployee: model.idEmployee,
       description: model.description,

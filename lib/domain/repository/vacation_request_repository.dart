@@ -3,11 +3,11 @@ import 'package:flutter_application_gustov/data/models/vacation_request_model.da
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 
 abstract class VacationRequestRepository {
-  Future<DataState<List<VacationRequestEntity>>> getVacationRequest();
+  Future<DataState<List<VactionRequestEntity>>> getVacationRequest();
 
-  Future<DataState<List<VacationRequestEntity>>> getVacationRequestBydId(
+  Future<DataState<List<VactionRequestEntity>>> getVacationRequestBydId(
       String idUser);
 
-  Future<DataState<VacationRequestEntity>> insertVacationRequestBydId(
+  Future<DataState<VactionRequestEntity>> insertVacationRequestBydId(
       VacationRequestModel vac);
 }

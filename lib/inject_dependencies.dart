@@ -1,14 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_application_gustov/data/data_sources/remote/dao.implementation/dao_employee_impl.dart';
+import 'package:flutter_application_gustov/data/data_sources/remote/dao.implementation/dao_settings_impl.dart';
 import 'package:flutter_application_gustov/data/data_sources/remote/dao.implementation/dao_vacation_request_impl.dart';
 import 'package:flutter_application_gustov/data/data_sources/remote/dao.interfaces/dao_employee.dart';
+import 'package:flutter_application_gustov/data/data_sources/remote/dao.interfaces/dao_settings.dart';
 import 'package:flutter_application_gustov/data/repository_impl/authentication_repository_impl.dart';
 import 'package:flutter_application_gustov/data/repository_impl/employee_repository_impl.dart';
 import 'package:flutter_application_gustov/data/repository_impl/session_repository_impl.dart';
+import 'package:flutter_application_gustov/data/repository_impl/settings_repository_impl.dart';
 import 'package:flutter_application_gustov/data/repository_impl/vacation_request_repository_impl.dart';
 import 'package:flutter_application_gustov/domain/repository/authentication_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/employee_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/session_repository.dart';
+import 'package:flutter_application_gustov/domain/repository/settings_repository.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_employees.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request.dart';
@@ -31,6 +35,7 @@ import 'package:get_it/get_it.dart';
 
 import 'data/data_sources/remote/dao.interfaces/dao_vacation_request.dart';
 import 'domain/repository/vacation_request_repository.dart';
+import 'domain/usecases/get_scale_days_vacation.dart';
 
 final sl = GetIt.instance;
 Future<void> injectDependencies() async {
@@ -38,10 +43,16 @@ Future<void> injectDependencies() async {
   sl.registerSingleton<Dio>(Dio());
 
   // data
-  sl.registerSingleton<DAOVacationRequest>(
+  sl.registerSingleton<DAOVactionRequest>(
     DAOVacationRequestImpl(),
   );
-  sl.registerSingleton<DAOEmployee>(DAOEmployeeImpl());
+  sl.registerSingleton<DAOEmployee>(
+    DAOEmployeeImpl(),
+  );
+
+  sl.registerSingleton<DAOSettings>(
+    DAOSettingsImpl(),
+  );
 
   // repository
   sl.registerSingleton<AuthenticationRepository>(
@@ -56,6 +67,12 @@ Future<void> injectDependencies() async {
 
   sl.registerSingleton<VacationRequestRepository>(
     VacationRequestRepositoryImpl(sl(), sl()),
+  );
+
+  sl.registerSingleton<SettingsRepository>(
+    SettingsRepositoryImpl(
+      sl(),
+    ),
   );
 
   // UseCases
@@ -100,6 +117,12 @@ Future<void> injectDependencies() async {
     ),
   );
 
+  sl.registerSingleton<GetScaleDaysVacationUseCase>(
+    GetScaleDaysVacationUseCase(
+      sl(),
+    ),
+  );
+
   // Blocs
   sl.registerSingleton<SessionBloc>(SessionBloc());
 
@@ -129,6 +152,7 @@ Future<void> injectDependencies() async {
   );
   sl.registerFactory<VacationRequestCreateBloc>(
     () => VacationRequestCreateBloc(
+      sl(),
       sl(),
       sl(),
       sl(),

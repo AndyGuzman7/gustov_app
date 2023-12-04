@@ -5,11 +5,10 @@ import 'package:flutter_application_gustov/data/models/employee_model.dart';
 import 'package:flutter_application_gustov/data/models/vacation_request_model.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
-import 'package:flutter_application_gustov/domain/repository/session_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/vacation_request_repository.dart';
 
 class VacationRequestRepositoryImpl implements VacationRequestRepository {
-  final DAOVacationRequest _daoVacationRequest;
+  final DAOVactionRequest _daoVacationRequest;
   final DAOEmployee _daoEmployee;
 
   VacationRequestRepositoryImpl(
@@ -18,7 +17,7 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   );
 
   @override
-  Future<DataState<List<VacationRequestEntity>>> getVacationRequest() async {
+  Future<DataState<List<VactionRequestEntity>>> getVacationRequest() async {
     try {
       final list = await _daoVacationRequest.getAll();
       final user = await _daoEmployee.getAll();
@@ -31,7 +30,7 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   }
 
   @override
-  Future<DataState<List<VacationRequestEntity>>> getVacationRequestBydId(
+  Future<DataState<List<VactionRequestEntity>>> getVacationRequestBydId(
       String idUser) async {
     try {
       final list = await _daoVacationRequest.getAllByType('idEmployee', idUser);
@@ -44,14 +43,14 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   }
 
   @override
-  Future<DataState<VacationRequestEntity>> insertVacationRequestBydId(
+  Future<DataState<VactionRequestEntity>> insertVacationRequestBydId(
       VacationRequestModel vac) async {
     try {
       final list = await _daoVacationRequest.insertWithGeneratedId(vac);
       final user = await _daoEmployee.getById(vac.idEmployee!);
 
       if (list) {
-        return DataSuccess(VacationRequestEntity.fromModel(vac, user!));
+        return DataSuccess(VactionRequestEntity.fromModel(vac, user!));
       }
       return const DataEmpty();
     } on DioException catch (e) {
@@ -59,13 +58,13 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
     }
   }
 
-  List<VacationRequestEntity> convertListModelsToEntities(
+  List<VactionRequestEntity> convertListModelsToEntities(
     List<VacationRequestModel> list,
     List<EmployeeModel> user,
   ) {
     final newList = list
         .map(
-          (e) => VacationRequestEntity.fromModel(
+          (e) => VactionRequestEntity.fromModel(
             e,
             user.firstWhere((element) => element.id == e.idEmployee),
           ),

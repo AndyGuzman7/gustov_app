@@ -7,6 +7,7 @@ import 'package:flutter_application_gustov/data/models/error_dialog_data.dart';
 import 'package:flutter_application_gustov/data/models/vacation_request_model.dart';
 import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
+import 'package:flutter_application_gustov/domain/usecases/get_scale_days_vacation.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request_by_employee.dart';
 import 'package:flutter_application_gustov/domain/usecases/insert_vacation_request.dart';
 import 'package:flutter_application_gustov/presentation/bloc/session/session_bloc.dart';
@@ -20,14 +21,16 @@ class VacationRequestCreateBloc
     extends Bloc<VacationRequestCreateEvent, VacationRequestCreateState> {
   final SessionBloc sessionBloc;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final GetVacationRequestByEmployeeUseCase
       _getVacationRequestByEmployeeUseCase;
   final InsertVacationRequestUseCase _insertVacationRequestUseCase;
+  final GetScaleDaysVacationUseCase _getScaleDaysVacationUseCase;
+
   VacationRequestCreateBloc(
     this.sessionBloc,
     this._getVacationRequestByEmployeeUseCase,
     this._insertVacationRequestUseCase,
+    this._getScaleDaysVacationUseCase,
   ) : super(const VacationRequestCreateState()) {
     on<StartedVacationRequestCreateEvent>(
       (event, emit) => _started(event, emit),
@@ -38,24 +41,21 @@ class VacationRequestCreateBloc
 
     on<RegisterVacationSubmittedRegisterEvent>(
         (event, emit) => _onRegisterSubmitted(event, emit));
-    //add(StartedVacationRequestCreateEvent())
   }
 
   Future<void> _started(
     StartedVacationRequestCreateEvent event,
     Emitter<VacationRequestCreateState> emit,
   ) async {
-    print("hola");
     final user = sessionBloc.state.user!.id;
     final list = await _getVacationRequestByEmployeeUseCase(params: user);
-    if (list is DataEmpty<List<VacationRequestEntity>>) return;
-    print(list.data!.length.toString());
+
+    final scaleVactionDay = await _getScaleDaysVacationUseCase();
+
     emit(
       state.copyWith(
-        vacationRequest: list.data,
-      ),
+          vacationRequest: list.data, settingRequests: scaleVactionDay.data),
     );
-    print("asfjkksjdjkasd");
   }
 
   void _onChangedName(
@@ -140,7 +140,7 @@ class VacationRequestCreateBloc
     return idUnico;
   }
 
-  Future<VacationRequestEntity?> _submit() async {
+  Future<VactionRequestEntity?> _submit() async {
     VacationRequestModel employee = VacationRequestModel(
       id: '',
       description: state.description!,
@@ -153,7 +153,7 @@ class VacationRequestCreateBloc
     final response = await _insertVacationRequestUseCase(
       params: InsertVacationRequestParams(employee),
     );
-    if (response is DataSuccess<VacationRequestEntity>) {
+    if (response is DataSuccess<VactionRequestEntity>) {
       return response.data;
     }
     return null;

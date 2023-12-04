@@ -4,12 +4,12 @@ import 'package:flutter_application_gustov/domain/entities/vacation_request_enti
 import 'package:flutter_application_gustov/domain/repository/vacation_request_repository.dart';
 
 class GetVacationRequestByEmployeeUseCase
-    implements UseCase<DataState<List<VacationRequestEntity>>, String> {
+    implements UseCase<DataState<List<VactionRequestEntity>>, String> {
   final VacationRequestRepository _vacationRequestRepository;
 
   GetVacationRequestByEmployeeUseCase(this._vacationRequestRepository);
   @override
-  Future<DataState<List<VacationRequestEntity>>> call({String? params}) {
+  Future<DataState<List<VactionRequestEntity>>> call({String? params}) {
     return _vacationRequestRepository.getVacationRequestBydId(params!);
   }
 }

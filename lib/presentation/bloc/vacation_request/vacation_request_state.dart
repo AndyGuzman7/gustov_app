@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 
 abstract class VacationRequestState extends Equatable {
-  final List<VacationRequestEntity>? vacationRequest;
+  final List<VactionRequestEntity>? vacationRequest;
   final DioException? error;
 
   const VacationRequestState({this.vacationRequest, this.error});
@@ -18,7 +18,7 @@ class VacationRequestLoading extends VacationRequestState {
 
 class VacationRequestDone extends VacationRequestState {
   const VacationRequestDone(
-    List<VacationRequestEntity>? vacationRequest,
+    List<VactionRequestEntity>? vacationRequest,
   ) : super(
           vacationRequest: vacationRequest,
         );
