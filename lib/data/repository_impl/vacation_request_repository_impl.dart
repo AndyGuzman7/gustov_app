@@ -5,11 +5,10 @@ import 'package:flutter_application_gustov/data/models/employee_model.dart';
 import 'package:flutter_application_gustov/data/models/vacation_request_model.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
-import 'package:flutter_application_gustov/domain/repository/session_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/vacation_request_repository.dart';
 
 class VacationRequestRepositoryImpl implements VacationRequestRepository {
-  final DAOVacationRequest _daoVacationRequest;
+  final DAOVactionRequest _daoVacationRequest;
   final DAOEmployee _daoEmployee;
 
   VacationRequestRepositoryImpl(
@@ -72,5 +71,21 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
         )
         .toList();
     return newList;
+  }
+
+  @override
+  Future<DataState<bool>> changeAuthorizationVacation(
+      int status, String id) async {
+    try {
+      final response =
+          await _daoVacationRequest.update('autorization', status, id);
+
+      if (response) {
+        return DataSuccess(response);
+      }
+      return const DataEmpty();
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 }

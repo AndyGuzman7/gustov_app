@@ -10,4 +10,6 @@ abstract class VacationRequestRepository {
 
   Future<DataState<VacationRequestEntity>> insertVacationRequestBydId(
       VacationRequestModel vac);
+
+  Future<DataState<bool>> changeAuthorizationVacation(int status, String id);
 }

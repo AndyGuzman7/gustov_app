@@ -5,8 +5,8 @@ import 'package:flutter_application_gustov/config/routes/routes.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/data/models/error_dialog_data.dart';
 import 'package:flutter_application_gustov/data/models/vacation_request_model.dart';
-import 'package:flutter_application_gustov/domain/entities/employee_entity.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
+import 'package:flutter_application_gustov/domain/usecases/get_scale_days_vacation.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request_by_employee.dart';
 import 'package:flutter_application_gustov/domain/usecases/insert_vacation_request.dart';
 import 'package:flutter_application_gustov/presentation/bloc/session/session_bloc.dart';
@@ -20,45 +20,51 @@ class VacationRequestCreateBloc
     extends Bloc<VacationRequestCreateEvent, VacationRequestCreateState> {
   final SessionBloc sessionBloc;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final GetVacationRequestByEmployeeUseCase
       _getVacationRequestByEmployeeUseCase;
   final InsertVacationRequestUseCase _insertVacationRequestUseCase;
+  final GetScaleDaysVacationUseCase _getScaleDaysVacationUseCase;
+
   VacationRequestCreateBloc(
     this.sessionBloc,
     this._getVacationRequestByEmployeeUseCase,
     this._insertVacationRequestUseCase,
+    this._getScaleDaysVacationUseCase,
   ) : super(const VacationRequestCreateState()) {
     on<StartedVacationRequestCreateEvent>(
       (event, emit) => _started(event, emit),
     );
     on<DescriptionChangedRegisterEvent>(
-      (event, emit) => _onChangedName(event, emit),
+      (event, emit) => _onChangedDescription(event, emit),
     );
 
     on<RegisterVacationSubmittedRegisterEvent>(
         (event, emit) => _onRegisterSubmitted(event, emit));
-    //add(StartedVacationRequestCreateEvent())
+
+    on<DateSelectedChangedRegisterEvent>(
+        (event, emit) => _onChangedDateSelected(event, emit));
+    on<CleanDialogChangedRegisterEvent>(
+        (event, emit) => _onChangedCleanDialog(event, emit));
   }
 
   Future<void> _started(
     StartedVacationRequestCreateEvent event,
     Emitter<VacationRequestCreateState> emit,
   ) async {
-    print("hola");
     final user = sessionBloc.state.user!.id;
     final list = await _getVacationRequestByEmployeeUseCase(params: user);
-    if (list is DataEmpty<List<VacationRequestEntity>>) return;
-    print(list.data!.length.toString());
+
+    final scaleVactionDay = await _getScaleDaysVacationUseCase();
+
     emit(
       state.copyWith(
         vacationRequest: list.data,
+        settingRequests: scaleVactionDay.data,
       ),
     );
-    print("asfjkksjdjkasd");
   }
 
-  void _onChangedName(
+  void _onChangedDescription(
     DescriptionChangedRegisterEvent event,
     Emitter<VacationRequestCreateState> emit,
   ) {
@@ -69,16 +75,34 @@ class VacationRequestCreateBloc
     );
   }
 
+  void _onChangedCleanDialog(
+    CleanDialogChangedRegisterEvent event,
+    Emitter<VacationRequestCreateState> emit,
+  ) {
+    emit(
+      state.cleanDialog(),
+    );
+  }
+
+  void _onChangedDateSelected(
+    DateSelectedChangedRegisterEvent event,
+    Emitter<VacationRequestCreateState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        dateSelected: event.dateSelected,
+      ),
+    );
+  }
+
   Future<void> _onRegisterSubmitted(
     RegisterVacationSubmittedRegisterEvent event,
     Emitter<VacationRequestCreateState> emit,
   ) async {
-    print("holaas");
-    // if (!event. context.) return;
     final BuildContext buildContext = event.context;
     if (!isFormValid()) return;
-    //FocusScope.of(buildContext).unfocus();
-    Loading.showText(buildContext, "Solictando");
+
+    Loading.showText(buildContext, "Solicitando");
     final response = await _submit();
     Loading.close();
     if (response != null) {
@@ -124,22 +148,6 @@ class VacationRequestCreateBloc
     );
   }
 
-  _closeForm(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  String generarIdUnico() {
-    final now = DateTime.now();
-    final formattedDate = "${now.year}${now.month}${now.day}";
-    final random = Random();
-    final letrasAleatorias = String.fromCharCodes(List.generate(4,
-        (index) => random.nextInt(26) + 65)); // Genera letras aleatorias (A-Z).
-
-    final idUnico = "$formattedDate$letrasAleatorias";
-
-    return idUnico;
-  }
-
   Future<VacationRequestEntity?> _submit() async {
     VacationRequestModel employee = VacationRequestModel(
       id: '',
@@ -147,9 +155,9 @@ class VacationRequestCreateBloc
       idEmployee: sessionBloc.state.user!.id,
       autorization: 0,
       dateRequest: DateTime.now(),
+      dateVacationInit: state.dateSelected,
     );
-    print(employee.idEmployee);
-    print("super");
+
     final response = await _insertVacationRequestUseCase(
       params: InsertVacationRequestParams(employee),
     );

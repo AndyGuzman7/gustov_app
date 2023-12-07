@@ -8,8 +8,6 @@ class DAOEmployeeImpl extends BaseFirestoreRepositoryImpl<EmployeeModel>
 
   @override
   EmployeeModel fromJson(Map<String, dynamic> map) {
-    print("comida");
-    print(map);
     return EmployeeModel.fromJson(map);
   }
 

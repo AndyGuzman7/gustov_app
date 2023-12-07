@@ -21,6 +21,11 @@ class EmployeeEntity extends Equatable {
     this.password,
     this.workStartDate,
   });
+  String get fullName {
+    final List<String?> nameParts = [name, lastName, secondLastName];
+    final filteredNameParts = nameParts.where((part) => part != null).toList();
+    return filteredNameParts.join(' ');
+  }
 
   @override
   List<Object?> get props {

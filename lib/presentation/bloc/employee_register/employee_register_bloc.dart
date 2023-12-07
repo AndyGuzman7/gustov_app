@@ -150,24 +150,8 @@ class EmployeeRegisterBloc
     );
   }
 
-  _closeForm(BuildContext context) {
-    Navigator.pop(context);
-  }
-
-  String generarIdUnico() {
-    final now = DateTime.now();
-    final formattedDate = "${now.year}${now.month}${now.day}";
-    final random = Random();
-    final letrasAleatorias = String.fromCharCodes(List.generate(4,
-        (index) => random.nextInt(26) + 65)); // Genera letras aleatorias (A-Z).
-
-    final idUnico = "$formattedDate$letrasAleatorias";
-
-    return idUnico;
-  }
-
   Future<EmployeeEntity?> _submit() async {
-    final password = generarIdUnico();
+    final password = generatePassword();
 
     final user = await _signUpEmployeeUseCase(
       params: SignUpEmployeeParams(state.email!, password),
@@ -190,11 +174,10 @@ class EmployeeRegisterBloc
     final response =
         await _insertEmployeeUseCase(params: InsertEmployeeParams(employee));
     if (response is DataSuccess<EmployeeEntity>) {
-      final email = EmailService(
+      await EmailService.sendEmail(
           employee.email!,
           "Contraseña del sistema de Gustov APP",
           "Contraseña: ${employee.password}");
-      await email.sendEmail();
       return response.data;
     }
     return null;
@@ -210,10 +193,10 @@ class EmployeeRegisterBloc
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     final Random random = Random();
-    final int length = 8;
+    const int length = 8;
 
     String password = '';
-    Set<int> usedIndices = Set();
+    Set<int> usedIndices = {};
 
     for (int i = 0; i < length; i++) {
       int randomIndex;

@@ -4,7 +4,6 @@ import 'package:flutter_application_gustov/config/routes/routes.dart';
 import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_session.dart';
 import 'package:flutter_application_gustov/presentation/bloc/session/session_bloc.dart';
-import 'package:get/get.dart';
 
 part 'splash_event.dart';
 part 'splash_state.dart';
