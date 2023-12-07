@@ -18,11 +18,10 @@ import 'package:flutter_application_gustov/presentation/widgets/loading/loading.
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final SessionBloc sessionBloc;
 
-  //final UserRepository userRepository;
   final SaveSessionUseCase _saveSessionUseCase;
   final SignEmployeeUseCase _signEmployeeUseCase;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  //final SessionRepository _session;
+
   LoginBloc(
     this.sessionBloc,
     this._saveSessionUseCase,
@@ -68,18 +67,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         return;
       }
 
-      // Muestra la carga antes de la solicitud asincrónica
       Loading.showText(buildContext, "Iniciando Sesión...");
 
       final response = await _submit(password!, email!);
 
-      // Cierra la carga después de la solicitud asincrónica
       Loading.close();
 
       if (response != null) {
         setUserInSession(response);
         await _saveSessionUseCase(params: SaveSessionParams(response));
-        // Navega a la ruta después de asegurarte de que el contexto esté montado
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (Navigator.canPop(buildContext)) {
             Navigator.pushReplacementNamed(buildContext, Routes.home);
@@ -106,7 +102,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         "Reintentar",
         () async {
           Dialogs.close();
-          await _onLoginSubmitted(event, emit); // Llamada al mismo método
+          await _onLoginSubmitted(event, emit);
         },
         false,
       ),
@@ -136,11 +132,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     String password,
     String email,
   ) async {
-    print("hola");
     final response =
         await _signEmployeeUseCase(params: SignEmployeeParams(email, password));
 
-    print(response.data!.id);
     if (response is DataSuccess) {
       return response.data;
     } else if (response is DataFailed) {
@@ -166,19 +160,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
         return null;
       };
-
-  /*Future<void> _getDevicesInNetwork() async {
-    final Connectivity _connectivity = Connectivity();
-    var connectivityResult = await (_connectivity.checkConnectivity());
-
-    if (connectivityResult == ConnectivityResult.wifi) {
-      final wifiInfo = await (_connectivity.getfiBSSID());
-
-      // Parse the BSSID to obtain the IP range.
-      final ipRange = wifiInfo.split('.').take(3).join('.');
-
-      // Now you can scan the IP range for devices using the methods mentioned earlier.
-      // ...
-    }
-  }*/
 }

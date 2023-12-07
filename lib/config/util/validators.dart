@@ -57,6 +57,7 @@ abstract class Validators {
       };
 
   static String? Function(dynamic) get validationNull => (dynamic value) {
+        print(value);
         if (value == null) {
           return "Este campo es necesario";
         }

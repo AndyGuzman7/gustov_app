@@ -7,7 +7,10 @@ class VacationRequestModel {
   final int? autorization;
   final DateTime? dateRequest;
 
+  final DateTime? dateVacationInit;
+
   VacationRequestModel({
+    this.dateVacationInit,
     this.description,
     this.idEmployee,
     this.autorization,
@@ -23,6 +26,8 @@ class VacationRequestModel {
       idEmployee: map['idEmployee'] ?? '',
       dateRequest:
           (map['dateRequest'] as Timestamp?)?.toDate() ?? DateTime.now(),
+      dateVacationInit:
+          (map['dateVacationInit'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 
@@ -32,7 +37,8 @@ class VacationRequestModel {
       'description': description,
       'autorization': autorization,
       'idEmployee': idEmployee,
-      'dateRequest': dateRequest
+      'dateRequest': dateRequest,
+      'dateVacationInit': dateVacationInit
     };
   }
 }

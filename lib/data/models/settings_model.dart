@@ -17,19 +17,21 @@ class SettingsModel {
     return {
       'description': description,
       'scale': scale,
-      'vacationDays': vacationDays,
+      'vacation_days': vacationDays,
       'timeMin': timeMin,
       'timeMax': timeMax,
     };
   }
 
   factory SettingsModel.fromJson(Map<String, dynamic> json) {
-    return SettingsModel(
-      description: json['description'],
-      scale: json['scale'],
-      vacationDays: json['vacationDays'],
-      timeMin: json['working_time']['time_min'],
-      timeMax: json['working_time']['timeMax'],
+    final model = SettingsModel(
+      description: json['description'] ?? '',
+      scale: json['scale'] ?? '',
+      vacationDays: json['vacation_days'] ?? 0,
+      timeMin: json['working_time_range']['time_min'] ?? 0,
+      timeMax: json['working_time_range']['time_max'] ?? 0,
     );
+
+    return model;
   }
 }

@@ -17,7 +17,7 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   );
 
   @override
-  Future<DataState<List<VactionRequestEntity>>> getVacationRequest() async {
+  Future<DataState<List<VacationRequestEntity>>> getVacationRequest() async {
     try {
       final list = await _daoVacationRequest.getAll();
       final user = await _daoEmployee.getAll();
@@ -30,7 +30,7 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   }
 
   @override
-  Future<DataState<List<VactionRequestEntity>>> getVacationRequestBydId(
+  Future<DataState<List<VacationRequestEntity>>> getVacationRequestBydId(
       String idUser) async {
     try {
       final list = await _daoVacationRequest.getAllByType('idEmployee', idUser);
@@ -43,14 +43,14 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
   }
 
   @override
-  Future<DataState<VactionRequestEntity>> insertVacationRequestBydId(
+  Future<DataState<VacationRequestEntity>> insertVacationRequestBydId(
       VacationRequestModel vac) async {
     try {
       final list = await _daoVacationRequest.insertWithGeneratedId(vac);
       final user = await _daoEmployee.getById(vac.idEmployee!);
 
       if (list) {
-        return DataSuccess(VactionRequestEntity.fromModel(vac, user!));
+        return DataSuccess(VacationRequestEntity.fromModel(vac, user!));
       }
       return const DataEmpty();
     } on DioException catch (e) {
@@ -58,18 +58,34 @@ class VacationRequestRepositoryImpl implements VacationRequestRepository {
     }
   }
 
-  List<VactionRequestEntity> convertListModelsToEntities(
+  List<VacationRequestEntity> convertListModelsToEntities(
     List<VacationRequestModel> list,
     List<EmployeeModel> user,
   ) {
     final newList = list
         .map(
-          (e) => VactionRequestEntity.fromModel(
+          (e) => VacationRequestEntity.fromModel(
             e,
             user.firstWhere((element) => element.id == e.idEmployee),
           ),
         )
         .toList();
     return newList;
+  }
+
+  @override
+  Future<DataState<bool>> changeAuthorizationVacation(
+      int status, String id) async {
+    try {
+      final response =
+          await _daoVacationRequest.update('autorization', status, id);
+
+      if (response) {
+        return DataSuccess(response);
+      }
+      return const DataEmpty();
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 }

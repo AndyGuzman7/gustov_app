@@ -2,11 +2,28 @@ import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_application_gustov/domain/entities/vacation_request_entity.dart';
 
-abstract class VacationRequestState extends Equatable {
-  final List<VactionRequestEntity>? vacationRequest;
-  final DioException? error;
+import '../../../domain/entities/settings_entity.dart';
 
-  const VacationRequestState({this.vacationRequest, this.error});
+class VacationRequestState extends Equatable {
+  final List<VacationRequestEntity>? vacationRequest;
+  final DioException? error;
+  final List<SettingsEntity>? settingRequests;
+  const VacationRequestState({
+    this.vacationRequest,
+    this.error,
+    this.settingRequests,
+  });
+  VacationRequestState copyWith({
+    final DioException? error,
+    List<VacationRequestEntity>? vacationRequest,
+    List<SettingsEntity>? settingRequests,
+  }) {
+    return VacationRequestState(
+      error: error ?? this.error,
+      vacationRequest: vacationRequest ?? this.vacationRequest,
+      settingRequests: settingRequests ?? this.settingRequests,
+    );
+  }
 
   @override
   List<Object?> get props => [vacationRequest!, error!];
@@ -18,9 +35,11 @@ class VacationRequestLoading extends VacationRequestState {
 
 class VacationRequestDone extends VacationRequestState {
   const VacationRequestDone(
-    List<VactionRequestEntity>? vacationRequest,
+    List<VacationRequestEntity>? vacationRequest,
+    List<SettingsEntity>? settingRequests,
   ) : super(
           vacationRequest: vacationRequest,
+          settingRequests: settingRequests,
         );
 }
 

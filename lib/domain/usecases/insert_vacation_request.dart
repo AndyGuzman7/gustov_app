@@ -6,12 +6,12 @@ import 'package:flutter_application_gustov/domain/repository/vacation_request_re
 
 class InsertVacationRequestUseCase
     implements
-        UseCase<DataState<VactionRequestEntity>, InsertVacationRequestParams> {
+        UseCase<DataState<VacationRequestEntity>, InsertVacationRequestParams> {
   final VacationRequestRepository _vacationRequestRepository;
 
   InsertVacationRequestUseCase(this._vacationRequestRepository);
   @override
-  Future<DataState<VactionRequestEntity>> call(
+  Future<DataState<VacationRequestEntity>> call(
       {InsertVacationRequestParams? params}) async {
     return await _vacationRequestRepository
         .insertVacationRequestBydId(params!.vacationRequestEntity);

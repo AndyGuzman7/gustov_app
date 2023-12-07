@@ -9,7 +9,7 @@ class GetScaleDaysVacationUseCase
 
   GetScaleDaysVacationUseCase(this._settingsRepository);
   @override
-  Future<DataState<List<SettingsEntity>>> call({void params}) {
-    return _settingsRepository.getVacationRequest();
+  Future<DataState<List<SettingsEntity>>> call({void params}) async {
+    return await _settingsRepository.getVacationRequest();
   }
 }

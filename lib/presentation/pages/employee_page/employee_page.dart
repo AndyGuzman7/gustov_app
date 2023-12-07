@@ -5,7 +5,6 @@ import 'package:flutter_application_gustov/inject_dependencies.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_event.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_state.dart';
-import 'package:flutter_application_gustov/presentation/pages/employee_register_page/employee_register_.dart';
 import 'package:flutter_application_gustov/presentation/widgets/body/body_base.dart';
 import 'package:flutter_application_gustov/presentation/widgets/inputs/custom_button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

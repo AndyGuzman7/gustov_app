@@ -13,6 +13,15 @@ class DescriptionChangedRegisterEvent implements VacationRequestCreateEvent {
   const DescriptionChangedRegisterEvent(this.description);
 }
 
+class DateSelectedChangedRegisterEvent implements VacationRequestCreateEvent {
+  final DateTime dateSelected;
+  const DateSelectedChangedRegisterEvent(this.dateSelected);
+}
+
+class CleanDialogChangedRegisterEvent implements VacationRequestCreateEvent {
+  const CleanDialogChangedRegisterEvent();
+}
+
 class RegisterVacationSubmittedRegisterEvent
     implements VacationRequestCreateEvent {
   final BuildContext context;

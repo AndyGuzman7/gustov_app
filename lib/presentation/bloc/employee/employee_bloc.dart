@@ -3,7 +3,6 @@ import 'package:flutter_application_gustov/core/resources/data_state.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_employees.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_event.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_state.dart';
-import 'package:flutter_application_gustov/presentation/bloc/splash/splash_bloc.dart';
 
 class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   EmployeeBloc(

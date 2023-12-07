@@ -13,6 +13,7 @@ import 'package:flutter_application_gustov/domain/repository/authentication_repo
 import 'package:flutter_application_gustov/domain/repository/employee_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/session_repository.dart';
 import 'package:flutter_application_gustov/domain/repository/settings_repository.dart';
+import 'package:flutter_application_gustov/domain/usecases/change_status_vacation.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_employees.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/get_vacation_request.dart';
@@ -23,6 +24,7 @@ import 'package:flutter_application_gustov/domain/usecases/save_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/sign_employee.dart';
 import 'package:flutter_application_gustov/domain/usecases/signout_session.dart';
 import 'package:flutter_application_gustov/domain/usecases/signup_employee.dart';
+import 'package:flutter_application_gustov/presentation/bloc/dialog/dialog_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee/employee_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee_register/employee_register_bloc.dart';
 import 'package:flutter_application_gustov/presentation/bloc/employee_register/employee_register_event.dart';
@@ -122,6 +124,11 @@ Future<void> injectDependencies() async {
       sl(),
     ),
   );
+  sl.registerSingleton<ChangeStatusVacationUseCase>(
+    ChangeStatusVacationUseCase(
+      sl(),
+    ),
+  );
 
   // Blocs
   sl.registerSingleton<SessionBloc>(SessionBloc());
@@ -138,7 +145,7 @@ Future<void> injectDependencies() async {
   );
 
   sl.registerFactory<VacationRequestBloc>(
-    () => VacationRequestBloc(sl()),
+    () => VacationRequestBloc(sl(), sl()),
   );
   sl.registerFactory<EmployeeBloc>(() => EmployeeBloc(sl()));
 
@@ -157,5 +164,9 @@ Future<void> injectDependencies() async {
       sl(),
       sl(),
     ),
+  );
+
+  sl.registerFactory<DialogBloc>(
+    () => DialogBloc(sl()),
   );
 }
